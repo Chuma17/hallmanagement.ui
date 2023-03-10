@@ -11,15 +11,17 @@ const PorterLogin = () => {
     async function submitHandler(e) {
         e.preventDefault();
 
-        const response = await axios.post("https://localhost:44324/api/Porter/Porter-login", { userName, password });
+        try {
+            const response = await axios.post("https://localhost:44324/api/Porter/Porter-login", { userName, password });
 
-        if (response.status === 200) {
-            localStorage.setItem("user", JSON.stringify(response.data));
-            console.log(response.data)
-            navigate("/porter-dashboard");
-        }
-        else {
-            console.log("error")
+            if (response.status === 200) {
+                localStorage.setItem("user", JSON.stringify(response.data));
+                console.log(response.data)
+                navigate("/porter-dashboard");
+            }
+        } catch (error) {
+            console.log(error.response.data)
+            window.alert(error.response.data.message)
         }
 
     };

@@ -12,21 +12,25 @@ const HallAdminLogin = () => {
     async function submitHandler(e) {
         e.preventDefault();
 
-        const response = await axios.post("https://localhost:44324/api/HallAdmin/HallAdmin-login", { userName, password });
+        try {
+            const response = await axios.post("https://localhost:44324/api/HallAdmin/HallAdmin-login", { userName, password });
 
-        if (response.status === 200) {
-            localStorage.setItem("user", JSON.stringify(response.data));
-            console.log(response.data)
-            navigate("/hallAdmin-dashboard");
-        }                    
-        else{
-            console.log("error")
+            if (response.status === 200) {
+                localStorage.setItem("user", JSON.stringify(response.data));
+                console.log(response.data)
+                navigate("/hallAdmin-dashboard");
+            }
+            
+        } catch (error) {
+            console.log(error.response.data)
+            window.alert(error.response.data.message)
         }
+
 
     };
 
     return <>
-    <form className="login-form form w-75s" onSubmit={submitHandler}>
+        <form className="login-form form w-75s" onSubmit={submitHandler}>
 
             <h3 className="mt-3 mb-3 ms-4">Login</h3>
             <hr />
@@ -64,5 +68,5 @@ const HallAdminLogin = () => {
         </form>
     </>
 }
- 
+
 export default HallAdminLogin;
