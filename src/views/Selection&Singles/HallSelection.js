@@ -51,7 +51,7 @@ const HallSelection = () => {
 
                                     <hr />
                                     <hr />
-                                    <Link to={`/view-hall/${hall.hallId}`}><button className="btn btn-light">View Hall</button></Link>
+                                    <Link to={`/view-select-hall/${hall.hallId}`}><button className="btn btn-light">View Hall</button></Link>
                                 </div>
                             </div>
                         </div>

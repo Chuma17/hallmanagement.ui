@@ -39,7 +39,7 @@ const Header = () => {
                 <div className="d-flex">
 
                     {userInfo &&
-                        <Link className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
+                        <Link to={`/edit-account/${userInfo.studentId}`} className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
                     }
 
                     {userInfo && userInfo.role === "Student" ? (
@@ -73,7 +73,7 @@ const Header = () => {
                                 </Link>
                             ) : (
                                 <button className="btn btn-secondary text-light m-auto" disabled>
-                                    Hall : {userInfo.hallName !== "empty" && userInfo.hallName}\
+                                    Hall : {userInfo.hallName !== "empty" && userInfo.hallName}
                                     {userInfo.hallName === "empty" && <span>NA</span>}
                                 </button>
                             )}

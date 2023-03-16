@@ -36,6 +36,12 @@ const RoomSelection = () => {
     return <>
         <div className="container ms-auto me-auto mt-3">
 
+            <div className="d-flex justify-content-between bg-dark p-4 text-light">
+                <button className="btn btn-danger" onClick={goBack}>Go Back</button>
+                <h3>Rooms [ {rooms.length} ]</h3>
+                <Link to="/student-dashboard"><button className="btn btn-success">Dashboard</button></Link>
+            </div>
+
             <div className="row">
 
                 {blockId !== null ? (
@@ -59,7 +65,7 @@ const RoomSelection = () => {
                                         <p style={{ textAlign: "left" }}>Room Full: {room.isFull === true && <span>Yes</span>} {room.isFull === false && <span>No</span>} </p>
 
                                         <hr />
-                                        <Link to={`/view-room/${room.roomId}`}><button className="btn btn-light">View room</button></Link>
+                                        <Link to={`/view-select-room/${room.roomId}`}><button className="btn btn-light">View room</button></Link>
                                     </div>
                                 </div>
                             </div>

@@ -61,7 +61,7 @@ const StudentLogin = () => {
                 Sign in
             </button>
 
-            <p className="mb-2 pb-lg-2 mb-4 text-center">Don't have an account? <Link to="/register">Register here</Link></p>
+            <p className="mb-2 pb-lg-2 mb-4 text-center">Don't have an account? <Link to="/student-registeration">Register here</Link></p>
 
         </form>
     </>

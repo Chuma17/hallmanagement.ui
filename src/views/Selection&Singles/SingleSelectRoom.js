@@ -3,38 +3,38 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
-const SingleBlock = () => {
+const SingleSelectRoom = () => {
     let params = useParams();
-    const blockId = params.id;
+    const roomId = params.id;
     const user = JSON.parse(localStorage.getItem('user'));
 
-    const [block, setBlock] = useState({});
+    const [room, setRoom] = useState({});
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
 
-    async function getBlock(blockId) {
+    async function getRoom(roomId) {
         try {
-            const response = await axios.get(`https://localhost:44324/api/Block/get-single-block/${blockId}`);
+            const response = await axios.get(`https://localhost:44324/api/Room/get-single-room/${roomId}`);
 
-            setBlock(response.data);
+            setRoom(response.data);
         } catch (error) {
             console.error(error);
         }
     }
 
-    async function joinBlock(e) {
+    async function joinRoom(e) {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`https://localhost:44324/api/Students/join-block`, { blockId: blockId },
+            const response = await axios.post(`https://localhost:44324/api/Students/join-room`, { roomId: roomId },
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
                     }
                 })
 
-            user.blockId = blockId;
-            user.blockName = block.blockName;
+            user.roomId = roomId;
+            user.roomNumber = room.roomNumber;
             const updatedStudent = JSON.stringify(user);
             localStorage.setItem('user', updatedStudent);
 
@@ -56,19 +56,19 @@ const SingleBlock = () => {
         }
     }
 
-    async function leaveBlock(e) {
+    async function leaveRoom(e) {
         e.preventDefault();
 
         try {
-            const response = await axios.put(`https://localhost:44324/api/Students/leave-block`, {},
+            const response = await axios.put(`https://localhost:44324/api/Students/leave-room`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
                     }
                 })
 
-            user.blockId = null;
-            user.blockName = "empty";
+            user.roomId = null;
+            user.roomNumber = "empty";
             const updatedStudent = JSON.stringify(user);
             localStorage.setItem('user', updatedStudent);
 
@@ -91,42 +91,41 @@ const SingleBlock = () => {
     }
 
     useEffect(() => {
-        getBlock(blockId);
-    }, [blockId])
+        getRoom(roomId);
+    }, [roomId])
 
     return <>
         <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
 
-        {block && <>
+        {room && <>
 
             <section className="bg-dark text-light p-4 mt-5">
-                <h4>{block.blockName} Block</h4>
-                <h4>{block.roomCount} Rooms</h4>
-                <h4>{block.availableRooms} Available Rooms</h4>
-                <h6>Students in block: {block.studentCount}</h6>
-                <h6>Maximum Students in a Room: {block.roomSpace}</h6>
+                <h4>Room {room.roomNumber}</h4>
+                <h4>Maximum students: {room.maxOccupants}</h4>
+                <h4>Available Space: {room.availableSpace} </h4>
+                <h6>Students in the room: {room.studentCount}</h6>
+                <h6>Room Full: {room.isFull === true && <span>Yes</span>} {room.isFull === false && <span>No</span>}</h6>
+                <h6>Room Available: {room.isUnderMaintenance === true && <span>No</span>} {room.isUnderMaintenance === false && <span>Yes</span>}</h6>
                 <hr />
-
-                {user.blockId ? (
-                    user.blockId === blockId ? (
-                        <button className="btn btn-danger" type="button" onClick={leaveBlock}>
-                            Leave Block
+                {user.roomId ? (
+                    user.roomId === roomId ? (
+                        <button className="btn btn-danger" type="button" onClick={leaveRoom}>
+                            Leave Room
                         </button>
                     ) : (
                         <button className="btn btn-secondary" type="button" disabled>
-                            Registered in : {user.blockName} Block
+                            Registered in : Room {user.roomNumber}
                         </button>
                     )
                 ) : (
-                    <button className="btn btn-success" type="button" onClick={joinBlock}>
-                        Join Block
+                    <button className="btn btn-success" type="button" onClick={joinRoom}>
+                        Join Room
                     </button>
                 )}
-
             </section>
 
         </>}
     </>
 }
 
-export default SingleBlock;
+export default SingleSelectRoom;

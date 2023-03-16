@@ -60,7 +60,7 @@ const BlockSelection = () => {
                                         <hr />
 
                                         <hr />
-                                        <Link to={`/view-block/${block.blockId}`}><button className="btn btn-light">View Block</button></Link>
+                                        <Link to={`/view-select-block/${block.blockId}`}><button className="btn btn-light">View Block</button></Link>
                                     </div>
                                 </div>
                             </div>
