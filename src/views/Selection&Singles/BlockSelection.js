@@ -34,7 +34,7 @@ const BlockSelection = () => {
     return <>
         <div className="container ms-auto me-auto mt-3">
 
-            <div className="d-flex justify-content-between bg-dark p-4 text-light">
+            <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
                 <h3>Blocks [ {blocks.length} ]</h3>
                 <Link to="/select-room"><button className="btn btn-success">Select Room</button></Link>

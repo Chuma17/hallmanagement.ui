@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
 const SingleHall = () => {
@@ -40,7 +40,8 @@ const SingleHall = () => {
                 <h6>Students in hall: {hall.studentCount}</h6>
                 <h6>Available Rooms: {hall.availableRooms}</h6>
                 <h6>Maximum Students in a Room: {hall.roomSpace}</h6>
-                <hr />                
+                <hr />    
+                <Link to={`/hallAdmin-for-fall/${hallId}`}><button className="btn btn-success">View Hall Admin</button></Link>            
             </section>
 
         </>}

@@ -77,7 +77,7 @@ const AddHall = () => {
 
             <div className="mb-4">
                 <label className="form-label" htmlfor="hallType">Hall Type</label>
-                <select value={hallTypeId} onChange={e => setHallTypeId(e.target.value)} required class="form-control form-select">
+                <select value={hallTypeId} onChange={e => setHallTypeId(e.target.value)} required className="form-control form-select">
                     <option hidden value="">--- Select Hall Type ---</option>
 
                     {hallTypes.length > 0 && hallTypes.map(hallType1 => {

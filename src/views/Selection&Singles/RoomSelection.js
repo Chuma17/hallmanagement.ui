@@ -18,7 +18,7 @@ const RoomSelection = () => {
                 throw new Error("Hall ID or block ID is not set");
             }
             else {
-                const { data } = await axios.get(`https://localhost:44324/api/Hall/get-rooms-in-hall/${hallId}`);
+                const { data } = await axios.get(`https://localhost:44324/api/Block/get-rooms-in-block/${blockId}`);
                 setRooms(data);
             }
 
@@ -36,7 +36,7 @@ const RoomSelection = () => {
     return <>
         <div className="container ms-auto me-auto mt-3">
 
-            <div className="d-flex justify-content-between bg-dark p-4 text-light">
+            <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
                 <h3>Rooms [ {rooms.length} ]</h3>
                 <Link to="/student-dashboard"><button className="btn btn-success">Dashboard</button></Link>

@@ -6,9 +6,9 @@ const Selection = () => {
     const goBack = () => navigate(-1);
 
     return <>
-        <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
+        <button className="btn btn-danger mt-3 ms-5" onClick={goBack}>Go Back</button>
 
-        <div className="container d-flex justify-content-around mt-5">
+        <div className="container d-flex justify-content-around mt-4">
 
             <Link to="/select-hall">
                 <div class="card mb-4 mt-4 text-center text-light bg-dark" style={{ width: "20rem", height: "15rem" }}>

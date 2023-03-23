@@ -36,7 +36,8 @@ import StudentDevices from './views/StudentDevices';
 import AddStudentDevice from './views/AddStudentDevice';
 import StudentExitPass from './views/StudentExitPass';
 import AddExitPass from './views/AddExitPass';
-import SingleExitPass from './views/Selection&Singles/SingleExitPass';
+import SingleExitPass from './views/Singles/SingleExitPass';
+import SingleStudentExitPass from './views/Selection&Singles/SingleStudentExitPass';
 import Selection from './views/Selection&Singles/Selection';
 import HallTypeSelection from './views/Selection&Singles/HallTypeSelection';
 import HallSelection from './views/Selection&Singles/HallSelection';
@@ -50,7 +51,24 @@ import HallTypes from './views/HallTypes';
 import AddHallType from './views/AddHallType';
 import Halls from './views/Halls';
 import AddHall from './views/AddHall';
-
+import HallAdminForHall from './views/Singles/HallAdminForHall';
+import HallAdmins from './views/HallAdmins';
+import HallAdminRegistration from './views/Login&Reg/HallAdminRegistration';
+import Porters from './views/Porters';
+import PorterRegistration from './views/Login&Reg/PorterRegistration';
+import Blocks from './views/Blocks';
+import AddBlock from './views/AddBlock';
+import Rooms from './views/Rooms';
+import Notifications from './views/Notifications';
+import HallAdminNotifications from './views/HallAdminNotification';
+import AddNotification from './views/AddNotification';
+import ExitPasses from './views/ExitPasses';
+import UnapprovedExitPasses from './views/UnapprovedExitPasses';
+import ApprovedExitPasses from './views/ApprovedExitPasses';
+import StudentsInHall from './views/StudentsInHall';
+import ComplaintForms from './views/ComplaintForms';
+import RoomsForComplaint from './views/RoomsForComplaint';
+import ComplaintsInRoom from './views/ComplaintsInRoom';
 
 const ROLES = {
   'Student': "Student",
@@ -74,6 +92,9 @@ const App = () => {
         <Route path="/hallAdmin-login" element={<HallAdminLogin />} />
         <Route path="/chiefHallAdmin-login" element={<ChiefHallAdminLogin />} />
         <Route path="/view-hall/:id" element={<SingleHall />} />
+        <Route path="/hallAdmin-for-fall/:id" element={<HallAdminForHall />} />
+        <Route path="/notifications" element={<Notifications />} />
+        
 
         <Route path="/unauthorized" element={<Unauthorized />} />
 
@@ -84,6 +105,7 @@ const App = () => {
           <Route path="/student-dashboard" element={<StudentDashBoard />} />
           <Route path="/student-devices" element={<StudentDevices />} />
           <Route path="/student-exit-passes" element={<StudentExitPass />} />
+          <Route path="/view-student-exitPass/:id" element={<SingleStudentExitPass />} />
           <Route path="/add-device" element={<AddStudentDevice />} />
           <Route path="/student-complaint-form" element={<AddComplaintForm />} />
           <Route path="/add-exit-pass" element={<AddExitPass />} />
@@ -105,6 +127,19 @@ const App = () => {
 
         <Route element={<RequireAuth allowedRoles={[ROLES.HallAdmin]} />}>
           <Route path="/hallAdmin-dashboard" element={<HallAdminDashboard />} />
+          <Route path="/blocks" element={<Blocks />} />
+          <Route path="/add-block" element={<AddBlock />} />
+          <Route path="/view-rooms-in-block/:id" element={<Rooms />} />
+          <Route path="/hallAdmin-notifications" element={<HallAdminNotifications />} />
+          <Route path="/exit-passes" element={<ExitPasses />} />
+          <Route path="/pending-exitPass" element={<UnapprovedExitPasses />} />
+          <Route path="/approved-exitPass" element={<ApprovedExitPasses />} />
+          <Route path="/add-notification" element={<AddNotification />} />
+          <Route path="/students" element={<StudentsInHall />} />
+          <Route path="/complaint-forms" element={<ComplaintForms />} />
+          <Route path="/view-complaintRooms/:id" element={<RoomsForComplaint />} />
+          <Route path="/view-complaints/:id" element={<ComplaintsInRoom />} />
+
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.ChiefHallAdmin]} />}>
@@ -113,6 +148,11 @@ const App = () => {
           <Route path="/add-hall-type" element={<AddHallType />} />
           <Route path="/add-hall" element={<AddHall />} />
           <Route path="/halls" element={<Halls />} />
+          <Route path="/hall-admins" element={<HallAdmins />} />
+          <Route path="/add-hallAdmin" element={<HallAdminRegistration />} />
+          <Route path="/porters" element={<Porters />} />
+          <Route path="/add-porter" element={<PorterRegistration />} />
+
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Porter]} />}>

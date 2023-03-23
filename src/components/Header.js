@@ -16,7 +16,7 @@ const Header = () => {
 
     return <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand" href="/">Navbar</a>
+            <a className="navbar-brand" href="/">HMS</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -60,12 +60,30 @@ const Header = () => {
                     }
                 </div>
 
+
+
                 <div className="d-flex">
+
+                    {userInfo && userInfo.role === "HallAdmin" && (
+                        <div className="nav-item p-2 m-auto">
+                            {userInfo.hallId ? (                                
+                                    <button className="btn btn-success text-light m-auto" disabled={!userInfo.hallId}>
+                                        Hall : {userInfo.hallName !== "empty" && userInfo.hallName}
+                                        {userInfo.hallName === "empty" && <span>NA</span>}
+                                    </button>
+                            ) : (
+                                <button className="btn btn-secondary text-light m-auto" disabled>
+                                    Hall : {userInfo.hallName !== "empty" && userInfo.hallName}
+                                    {userInfo.hallName === "empty" && <span>NA</span>}
+                                </button>
+                            )}
+                        </div>
+                    )}
 
                     {userInfo && userInfo.role === "Student" && (
                         <div className="nav-item p-2 m-auto">
                             {userInfo.hallId ? (
-                                <Link to={`/view-hall/${userInfo.hallId}`}>
+                                <Link to={`/view-select-hall/${userInfo.hallId}`}>
                                     <button className="btn btn-success text-light m-auto" disabled={!userInfo.hallId}>
                                         Hall : {userInfo.hallName !== "empty" && userInfo.hallName}
                                         {userInfo.hallName === "empty" && <span>NA</span>}
@@ -83,7 +101,7 @@ const Header = () => {
                     {userInfo && userInfo.role === "Student" && (
                         <div className="nav-item p-2 m-auto">
                             {userInfo.blockId ? (
-                                <Link to={`/view-block/${userInfo.blockId}`}>
+                                <Link to={`/view-select-block/${userInfo.blockId}`}>
                                     <button className="btn btn-success text-light m-auto">
                                         Block : {userInfo.blockName !== "empty" && userInfo.blockName}
                                         {userInfo.blockName === "empty" && <span>NA</span>}
@@ -101,7 +119,7 @@ const Header = () => {
                     {userInfo && userInfo.role === "Student" && (
                         <div className="nav-item p-2 m-auto">
                             {userInfo.roomId ? (
-                                <Link to={`/view-room/${userInfo.roomId}`}>
+                                <Link to={`/view-select-room/${userInfo.roomId}`}>
                                     <button className="btn btn-success text-light m-auto" disabled={!userInfo.roomId}>
                                         Room : {userInfo.roomNumber !== "empty" && userInfo.roomNumber}
                                         {userInfo.roomNumber === "empty" && <span>NA</span>}
@@ -117,10 +135,20 @@ const Header = () => {
                     )}
                 </div>
 
+                <div className="d-flex">
 
-                {userInfo &&
-                    <button className="btn btn-outline-danger p-3 my-2 my-sm-0 me-4 text-light" onClick={Logout}> <i className="fa-solid fa-arrow-right-from-bracket me-1"></i> Sign Out</button>
-                }
+                    {userInfo && userInfo.role === "Student" && (
+                        <Link to="/notifications" className="nav-link m-auto"> <button className="btn btn-outline-success p-2 text-light"> Notifications</button></Link>
+                    )}
+
+                    {userInfo && userInfo.role === "HallAdmin" && (
+                        <Link to="/hallAdmin-notifications" className="nav-link m-auto"> <button className="btn btn-outline-success p-2 text-light"> Notifications</button></Link>
+                    )}
+
+                    {userInfo &&
+                        <button className="btn btn-outline-danger p-3 my-2 my-sm-0 me-4 text-light" onClick={Logout}> <i className="fa-solid fa-arrow-right-from-bracket me-1"></i> Sign Out</button>
+                    }
+                </div>
 
             </div>
 

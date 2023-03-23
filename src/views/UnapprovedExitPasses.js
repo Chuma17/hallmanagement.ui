@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-const StudentExitPass = () => {
+const UnapprovedExitPasses = () => {
 
     const [exitPasses, setExitPasses] = useState([]);
-    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    const hallId = user.hallId;
     const navigate = useNavigate();
-    const goBack = () => navigate(-1);
+    const goBack = () => navigate(-1);    
 
     useEffect(() => {
         async function getExitPasses() {
 
             try {
-                const { data } = await axios.get("https://localhost:44324/api/Students/get-exitPasses",
+                const { data } = await axios.get(`https://localhost:44324/api/ExitPass/get-pending-exitPasses`,
                     {
                         headers: {
-                            Authorization: `Bearer ${userInfo.accessToken}`
+                            Authorization: `Bearer ${user.accessToken}`
                         }
                     }
                 );
@@ -29,7 +30,7 @@ const StudentExitPass = () => {
                     window.alert("Your session has expired. Login again!");
                     localStorage.removeItem("user");
 
-                    navigate("/student-login");
+                    navigate("/hallAdmin-login");
                 }
                 else {
                     console.error(error);
@@ -45,8 +46,8 @@ const StudentExitPass = () => {
 
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
-                <h3>EXIT PASSES [ {exitPasses.length} ]</h3>
-                <Link to="/add-exit-pass"><button className="btn btn-success">Add Exit Pass</button></Link>
+                <h3>UNAPPROVED EXIT PASSES [ {exitPasses.length} ]</h3>
+                <Link to="/approved-exitPass"><button className="btn btn-success">Approved</button></Link>
             </div>
 
             <div className="row">
@@ -62,7 +63,7 @@ const StudentExitPass = () => {
                                     <p>Return Date : {exitPass.dateOfReturn.substring(0, 10)}</p>
                                     <p>State : {exitPass.stateOfArrival}</p>
                                     <hr />
-                                    <Link to={`/view-student-exitPass/${exitPass.exitPassId}`}><button className="btn btn-light">View Pass</button></Link>
+                                    <Link to={`/view-exitPass/${exitPass.exitPassId}`}><button className="btn btn-light">View Pass</button></Link>
                                 </div>
                             </div>
                         </div>
@@ -83,4 +84,4 @@ const StudentExitPass = () => {
     </>
 }
 
-export default StudentExitPass;
+export default UnapprovedExitPasses;

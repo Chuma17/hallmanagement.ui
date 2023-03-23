@@ -1,95 +1,84 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useParams } from "react-router";
 import axios from "axios";
 
-const HallTypes = () => {
+const RoomsForComplaint = () => {
+    let params = useParams();
+    const blockId = params.id;
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
     const user = JSON.parse(localStorage.getItem('user'));
+    const hallId = user.hallId
 
-    const [hallTypes, setHallTypes] = useState([]);
+    const [rooms, setRooms] = useState([]);
 
-    async function deleteHandler(hallTypeId) {
-        if (window.confirm('Confirm delete?')) {
-
+    useEffect(() => {
+        async function getRooms() {
             try {
-                const response = await axios.delete(`https://localhost:44324/api/HallType/delete-hallType/${hallTypeId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user.accessToken}`
-                        }
-                    });
+                const { data } = await axios.get(`https://localhost:44324/api/Block/get-rooms-in-block/${blockId}`);
 
-                if (response.status === 200) {
-                    window.location.reload();
-                }
+                setRooms(data);
             }
 
             catch (error) {
                 if (error.response.status === 401) {
                     window.alert("Your session has expired. Login again!");
                     localStorage.removeItem("user");
-
-                    navigate("/chiefHallAdmin-login");
+                    navigate("/hallAdmin-login");
                 }
                 else {
+                    console.log(error.response.data);
                     window.alert(error.response.data);
-                    console.error(error.response.data);
                 }
             }
         }
-    }
 
-    useEffect(() => {
-        async function getHallTypes() {
-            const { data } = await axios.get("https://localhost:44324/api/HallType/get-all-hallTypes");
-            setHallTypes(data);
-        }
-
-        getHallTypes();
-    }, [setHallTypes])
+        getRooms();
+    }, [setRooms])
 
     return <>
         <div className="container ms-auto me-auto mt-3">
 
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
-                <h3>Hall Types [ {hallTypes.length} ]</h3>
-                <Link to="/add-hall-type"><button className="btn btn-success">Add Hall Type</button></Link>
+                <h3>Rooms [ {rooms.length} ]</h3>
+                <Link to={`hallAdmin-dashboard`}><button className="btn btn-success me-2">Dashboard</button></Link>
+
             </div>
 
             <div className="row">
 
-                {hallTypes.length > 0 ? (
-                    hallTypes.map(hallType => {
+                {rooms.length > 0 ? (
+                    rooms.map(room => {
 
                         return <div className="col-md-4 d-flex justify-content-around">
 
                             <div className="card mt-4 mb-4 bg-dark text-light" style={{ width: "18rem", borderRadius: "5%" }}>
                                 <div className="card-body text-center fs-5">
-                                    <h3 className="card-title">{hallType.description}</h3>
+                                    <h3 className="card-title">Room {room.roomNumber}</h3>
+                                    <p>{room.studentCount && room.studentCount !== 0 ? room.studentCount : <span>No</span>} {room.studentCount === 0 && <span>students in room</span>} {room.studentCount === 1 && <span>student in room</span>} {room.studentCount > 1 && <span>students in room</span>}</p>
                                     <hr />
-                                    <p>Hall count: {hallType.hallCount}</p>
-                                    <p>{hallType.roomSpaceCount} in a room</p>
-                                    <button onClick={() => deleteHandler(hallType.hallTypeId)} className="btn btn-danger">Delete</button>
+                                    <Link to={`/view-complaints/${room.roomId}`}><button className="btn btn-light">View Pass</button></Link>
                                 </div>
                             </div>
                         </div>
                     })
 
                 ) : (
+
                     <div className="d-flex flex-column">
-                        <h2>No hall types</h2>
+                        <h2>No Rooms</h2>
                         <button className="btn btn-danger w-25" onClick={goBack}>
                             Go Back
                         </button>
                     </div>
-                )}
 
+                )}
 
             </div>
         </div>
     </>
 }
 
-export default HallTypes;
+export default RoomsForComplaint;

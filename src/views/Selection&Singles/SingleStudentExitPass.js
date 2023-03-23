@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
-const SingleExitPass = () => {
+const SingleStudentExitPass = () => {
     let params = useParams();
     const exitPassId = params.id;
 
@@ -53,4 +53,4 @@ const SingleExitPass = () => {
     </>
 }
 
-export default SingleExitPass;
+export default SingleStudentExitPass;
