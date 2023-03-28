@@ -38,8 +38,21 @@ const Header = () => {
 
                 <div className="d-flex">
 
-                    {userInfo &&
-                        <Link to={`/edit-account/${userInfo.studentId}`} className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
+                    {userInfo && userInfo.role === "Student" ? (
+                        <Link to={`/edit-student-account/${userInfo.studentId}`} className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
+                    ) :
+
+                        userInfo && userInfo.role === "HallAdmin" ? (
+                            <Link to={`/edit-hallAdmin-account/${userInfo.hallAdminId}`} className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
+                        ) :
+
+                            userInfo && userInfo.role === "ChiefHallAdmin" ? (
+                                <Link to={`/edit-chiefHallAdmin-account/${userInfo.chiefHallAdminId}`} className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
+                            ) :
+
+                                userInfo && userInfo.role === "Porter" && (
+                                    <Link to={`/edit-porter-account/${userInfo.porterId}`} className="nav-link"> <button className="btn btn-outline-success p-3 m-auto text-light"> <i className="fas fa-user"></i> Hi, {userInfo.userName}</button></Link>
+                                )
                     }
 
                     {userInfo && userInfo.role === "Student" ? (
@@ -65,11 +78,11 @@ const Header = () => {
 
                     {userInfo && userInfo.role === "HallAdmin" && (
                         <div className="nav-item p-2 m-auto">
-                            {userInfo.hallId ? (                                
-                                    <button className="btn btn-success text-light m-auto" disabled={!userInfo.hallId}>
-                                        Hall : {userInfo.hallName !== "empty" && userInfo.hallName}
-                                        {userInfo.hallName === "empty" && <span>NA</span>}
-                                    </button>
+                            {userInfo.hallId ? (
+                                <button className="btn btn-success text-light m-auto" disabled={!userInfo.hallId}>
+                                    Hall : {userInfo.hallName !== "empty" && userInfo.hallName}
+                                    {userInfo.hallName === "empty" && <span>NA</span>}
+                                </button>
                             ) : (
                                 <button className="btn btn-secondary text-light m-auto" disabled>
                                     Hall : {userInfo.hallName !== "empty" && userInfo.hallName}

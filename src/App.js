@@ -25,10 +25,15 @@ import PorterDashboard from './views/DashBoards/PorterDashboard';
 
 //Accounts
 import StudentAccount from './views/Accounts/StudentAccount';
+import HallAdminAccount from './views/Accounts/HallAdminAccount';
 
 //Singles
 import SingleHall from './views/Singles/SingleHall';
-
+import SingleExitPass from './views/Singles/SingleExitPass';
+import SingleStudentExitPass from './views/Singles/SingleStudentExitPass';
+import SingleSelectHall from './views/Selection&Singles/SingleSelectHall';
+import SingleSelectBlock from './views/Selection&Singles/SingleSelectBlock';
+import SingleSelectRoom from './views/Selection&Singles/SingleSelectRoom';
 
 //Views
 import HomePage from './views/HomePage';
@@ -36,16 +41,11 @@ import StudentDevices from './views/StudentDevices';
 import AddStudentDevice from './views/AddStudentDevice';
 import StudentExitPass from './views/ExitPass/StudentExitPass';
 import AddExitPass from './views/ExitPass/AddExitPass';
-import SingleExitPass from './views/Singles/SingleExitPass';
-import SingleStudentExitPass from './views/Singles/SingleStudentExitPass';
 import Selection from './views/Selection&Singles/Selection';
 import HallTypeSelection from './views/Selection&Singles/HallTypeSelection';
 import HallSelection from './views/Selection&Singles/HallSelection';
-import SingleSelectHall from './views/Selection&Singles/SingleSelectHall';
 import BlockSelection from './views/Selection&Singles/BlockSelection';
-import SingleSelectBlock from './views/Selection&Singles/SingleSelectBlock';
 import RoomSelection from './views/Selection&Singles/RoomSelection';
-import SingleSelectRoom from './views/Selection&Singles/SingleSelectRoom';
 import AddComplaintForm from './views/ComplaintForm/AddComplaintForm';
 import HallTypes from './views/HallTypes';
 import AddHallType from './views/AddHallType';
@@ -121,7 +121,7 @@ const App = () => {
           <Route path="/view-select-hall/:id" element={<SingleSelectHall />} />
           <Route path="/view-select-block/:id" element={<SingleSelectBlock />} />
           <Route path="/view-select-room/:id" element={<SingleSelectRoom />} />          
-          <Route path="/edit-account/:id" element={<StudentAccount />} />          
+          <Route path="/edit-student-account/:id" element={<StudentAccount />} />          
 
         </Route>
 
@@ -150,6 +150,8 @@ const App = () => {
           <Route path="/view-complaints/:id" element={<ComplaintsInRoom />} />
           <Route path="/students-due" element={<StudentsDue />} />
           <Route path="/students-overdue" element={<StudentsOverDue />} />
+          <Route path="/edit-hallAdmin-account/:id" element={<HallAdminAccount />} />          
+
 
         </Route>
 

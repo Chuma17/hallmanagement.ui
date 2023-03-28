@@ -20,29 +20,51 @@ const SingleHall = () => {
         } catch (error) {
             console.error(error);
         }
-    }    
+    }
 
     useEffect(() => {
         getHall(hallId);
     }, [hallId])
 
     return <>
-        <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
 
         {hall && <>
 
-            <section className="bg-dark text-light p-4 mt-5">
-                <h4>{hall.hallName}</h4>
-                <h4>{hall.hallType}</h4>
-                <h6>Hall Admin: {hall.hallAdminName}</h6>
-                <h6>Room Count: {hall.roomCount}</h6>
-                <h6>Block Count: {hall.blockCount}</h6>
-                <h6>Students in hall: {hall.studentCount}</h6>
-                <h6>Available Rooms: {hall.availableRooms}</h6>
-                <h6>Maximum Students in a Room: {hall.roomSpace}</h6>
-                <hr />    
-                <Link to={`/hallAdmin-for-fall/${hallId}`}><button className="btn btn-success">View Hall Admin</button></Link>            
-            </section>
+            <section className="container bg-dark text-light p-4 mt-5" style={{ borderRadius: "10px", width: '50rem', height: 'fit-content' }}>
+                <div className="d-flex justify-content-between">
+
+                    <div >
+                        <Link to="/select-hall"><button className="btn btn-danger">Go Back</button></Link>
+                    </div>
+                    <div>
+                        <h4 className="">{hall.hallType} | {hall.hallName}</h4>
+                    </div>
+                    <div className="ms-5">
+
+                    </div>
+                </div>
+
+                <hr />
+                
+                <div className="d-flex justify-content-between">
+                    <div>
+                        <h6 className="fs-5 mt-5">Hall Admin : {hall.hallAdminName}</h6>
+                        <h6 className="fs-5 mt-5">Room Count : {hall.roomCount}</h6>
+                        <h6 className="fs-5 mt-5 mb-5">Block Count : {hall.blockCount}</h6>
+                    </div>
+
+                    <div>
+                        <h6 className="fs-5 mt-5">Students in hall : {hall.studentCount}</h6>
+                        <h6 className="fs-5 mt-5">Available Rooms : {hall.availableRooms}</h6>
+                        <h6 className="fs-5 mt-5 mb-5">Maximum Students in a Room : {hall.roomSpace}</h6>
+                    </div>
+                </div>
+
+                <hr />
+
+                <Link to={`/hallAdmin-for-fall/${hallId}`}><button className="btn btn-success">View Hall Admin</button></Link>
+
+            </section>            
 
         </>}
     </>

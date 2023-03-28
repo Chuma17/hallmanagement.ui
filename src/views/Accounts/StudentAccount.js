@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -10,18 +10,19 @@ const StudentAccount = () => {
 
     const [firstName, setFirstName] = useState(userInfo.firstName);
     const [lastName, setLastName] = useState(userInfo.lastName);
-    const [gender, setGender] = useState(userInfo.gender);
     const [userName, setUserName] = useState(userInfo.userName);
+    const [email, setEmail] = useState(userInfo.email);
     const [department, setDepartment] = useState(userInfo.department);
     const [course, setCourse] = useState(userInfo.course);
-
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     async function submitHandler(e) {
         e.preventDefault();
 
         try {
             const response = await axios.put(`https://localhost:44324/api/Students/update-student`,
-                { firstName, lastName, gender, userName, department, course },
+                { firstName, lastName, userName, department, course, email },
                 {
                     headers: {
                         Authorization: `Bearer ${userInfo.accessToken}`
@@ -31,19 +32,15 @@ const StudentAccount = () => {
             if (response.status === 200) {
                 userInfo.firstName = firstName;
                 userInfo.lastName = lastName;
-                userInfo.gender = gender;
                 userInfo.userName = userName;
                 userInfo.department = department;
                 userInfo.course = course;
+                userInfo.email = email;
                 const updatedStudent = JSON.stringify(userInfo);
                 localStorage.setItem('user', updatedStudent);
 
-                window.alert(response.data);
-                navigate("/student-dashboard")
+                setSuccess(response.data);
             }
-
-            window.location.reload();
-            console.log(response);
         }
 
         catch (error) {
@@ -53,98 +50,143 @@ const StudentAccount = () => {
                 navigate("/student-login");
             }
             else {
-                console.log(error.response.data);
-                window.alert(error.response.data);
+                setError(error.response.data);
             }
         }
-    }
+    };
+
+    useEffect(() => {
+        let errorTimeoutId;
+        let successTimeoutId;
+
+        if (error) {
+            errorTimeoutId = setTimeout(() => {
+                setError(null);
+            }, 2000);
+        }
+
+        if (success) {
+            successTimeoutId = setTimeout(() => {
+                setSuccess(null);
+                window.location.reload();
+            }, 3000);
+        }
+
+        return () => {
+            clearTimeout(errorTimeoutId);
+            clearTimeout(successTimeoutId);
+        };
+
+    }, [error, success]);
 
 
     return <>
-        <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
+        <section className="background-radial-gradient overflow-hidden">
 
-        <form className="login-form form w-75s" onSubmit={submitHandler}>
+            <div className="container px-4 py-2 px-md-5 text-center text-lg-start my-5">
+                <div className="row gx-lg-5 align-items-center mb-4">
 
-            <h3 className="mt-3 mb-3 ms-4">Update Student Account</h3>
-            <hr />
+                    <div className="col-lg-8 mb-5 ms-auto me-auto mb-lg-0 position-relative">
+                        <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
+                        <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+                        <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>
 
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="firstName">First Name</label>
-                <input
-                    type="text"
-                    id="firstName"
-                    value={firstName}
-                    onChange={e => setFirstName(e.target.value)}
-                    required
-                    className="form-control"
-                />
+                        <div className="card bg-glass">
+                            <div className="card-body px-4 py-5 px-md-5">
+
+                                <form className="form" onSubmit={submitHandler}>
+                                    <h5 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Edit Account</h5>
+
+                                    {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
+                                    {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="firstName">First Name</label>
+                                        <input
+                                            type="text"
+                                            id="firstName"
+                                            value={firstName}
+                                            onChange={e => setFirstName(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="lastName">Last Name</label>
+                                        <input
+                                            type="text"
+                                            id="lastName"
+                                            value={lastName}
+                                            onChange={e => setLastName(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlfor="form3Example3">Email address</label>
+                                        <input
+                                            type="email"
+                                            id="form3Example3"
+                                            value={email}
+                                            onChange={e => setEmail(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="userName">User Name</label>
+                                        <input
+                                            type="text"
+                                            id="userName"
+                                            value={userName}
+                                            onChange={e => setUserName(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="department">Department</label>
+                                        <input
+                                            type="text"
+                                            id="department"
+                                            value={department}
+                                            onChange={e => setDepartment(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="course">Course</label>
+                                        <input
+                                            type="text"
+                                            id="course"
+                                            value={course}
+                                            onChange={e => setCourse(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="text-center">
+
+                                        <button type="submit" className="btn btn-dark w-25 btn-block mb-4">
+                                            Update
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="lastName">Last Name</label>
-                <input
-                    type="text"
-                    id="lastName"
-                    value={lastName}
-                    onChange={e => setLastName(e.target.value)}
-                    required
-                    className="form-control"
-                />
-            </div>
-
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="gender">Gender</label>
-                <input
-                    type="text"
-                    id="gender"
-                    value={gender}
-                    onChange={e => setGender(e.target.value)}
-                    required
-                    className="form-control"
-                />
-            </div>
-
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="userName">User Name</label>
-                <input
-                    type="text"
-                    id="userName"
-                    value={userName}
-                    onChange={e => setUserName(e.target.value)}
-                    required
-                    className="form-control"
-                />
-            </div>
-
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="department">Department</label>
-                <input
-                    type="text"
-                    id="department"
-                    value={department}
-                    onChange={e => setDepartment(e.target.value)}
-                    required
-                    className="form-control"
-                />
-            </div>
-
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="course">Course</label>
-                <input
-                    type="text"
-                    id="course"
-                    value={course}
-                    onChange={e => setCourse(e.target.value)}
-                    required
-                    className="form-control"
-                />
-            </div>
-
-            <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 ms-4 mb-4 mt-4">
-                Update
-            </button>
-
-        </form>
+        </section>
     </>
 }
 

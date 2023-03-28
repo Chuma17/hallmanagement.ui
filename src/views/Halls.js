@@ -93,7 +93,9 @@ const Halls = () => {
                                     <p>{hall.roomCount && hall.roomCount !== 0 ? hall.roomCount : <span>No</span>} {hall.roomCount === 0 && <span>rooms</span>} {hall.roomCount === 1 && <span>room</span>} {hall.roomCount > 1 && <span>rooms</span>} </p>
                                     <p>{hall.roomSpace} in a room</p>
                                     <p>{hall.studentCount && hall.studentCount !== 0 ? hall.studentCount : <span>No</span>} {hall.studentCount === 0 && <span>students</span>} {hall.studentCount === 1 && <span>student</span>} {hall.studentCount > 1 && <span>students</span>}</p>
+                                    <hr />
                                     <p>Is Assigned : {hall.isAssigned === true && <span>Yes</span>} {hall.isAssigned === false && <span>No</span>}</p>
+                                    <hr />
                                     <div className="d-flex justify-content-between">
                                         <Link to={`/view-hall/${hall.hallId}`}> <button className="btn btn-success">View</button></Link>
                                         <button onClick={() => deleteHandler(hall.hallId)} className="btn btn-danger">Delete</button>
