@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 
 const HallAdminDashboard = () => {
     return <>
-        <h1 className="products-header text-light btn-dark p-4 text-center mb-0">Chief Hall Admin Dashboard</h1>
-
         <div className="col container d-flex justify-content-evenly mt-5">
 
             <div>

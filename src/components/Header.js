@@ -23,15 +23,15 @@ const Header = () => {
             <div className="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
 
                 {!userInfo &&
-                    <div className="d-flex">
+                    <div className="d-flex justify-content-between mt-2">
 
-                        <Link to="/student-login" className="nav-link"> <button className="btn btn-outline-danger text-light">Student</button> </Link>
+                        <Link to="/student-login" className="nav-link"> <p className=" text-light">Student</p> </Link>
 
-                        <Link to="/hallAdmin-login" className="nav-link"><button className="btn btn-outline-danger text-light">Hall Admin</button></Link>
+                        <Link to="/hallAdmin-login" className="nav-link"><p className=" text-light">Hall Admin</p></Link>
 
-                        <Link to="/chiefHallAdmin-login" className="nav-link"><button className="btn btn-outline-danger text-light">Chief Hall Admin</button></Link>
+                        <Link to="/chiefHallAdmin-login" className="nav-link"><p className=" text-light">Chief Hall Admin</p></Link>
 
-                        <Link to="/porter-login" className="nav-link"><button className="btn btn-outline-danger text-light">Porter</button></Link>
+                        <Link to="/porter-login" className="nav-link"><p className=" text-light">Porter</p></Link>
 
                     </div>
                 }
@@ -59,7 +59,6 @@ const Header = () => {
                                 )
                     }
                 </div>
-
 
 
                 <div className="d-flex">
@@ -138,15 +137,15 @@ const Header = () => {
                 <div className="d-flex">
 
                     {userInfo && userInfo.role === "Student" && (
-                        <Link to="/notifications" className="nav-link m-auto"> <button className="btn btn-outline-success p-2 text-light"> Notifications</button></Link>
+                        <Link to="/notifications" className="nav-link m-auto"> <button className="btn btn-outline-success text-light"><i class="fa-solid fa-bell"></i></button></Link>
                     )}
 
                     {userInfo && userInfo.role === "HallAdmin" && (
-                        <Link to="/hallAdmin-notifications" className="nav-link m-auto"> <button className="btn btn-outline-success p-2 text-light"> Notifications</button></Link>
+                        <Link to="/hallAdmin-notifications" className="nav-link m-auto"> <button className="btn btn-outline-success text-light"><i class="fa-solid fa-bell"></i></button></Link>
                     )}
 
                     {userInfo &&
-                        <button className="btn btn-outline-danger p-3 my-2 my-sm-0 me-4 text-light" onClick={Logout}> <i className="fa-solid fa-arrow-right-from-bracket me-1"></i> Sign Out</button>
+                        <button className="btn btn-outline-danger my-2 my-sm-0 me-4 text-light" onClick={Logout}> <i className="fa-solid fa-arrow-right-from-bracket me-1"></i> Sign Out</button>
                     }
                 </div>
 

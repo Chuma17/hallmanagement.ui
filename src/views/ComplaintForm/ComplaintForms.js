@@ -41,7 +41,7 @@ const ComplaintForms = () => {
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
                 <h3>SELECT BLOCK [ {blocks.length} ]</h3>
-                <Link to="/hallAdmin-dashboard"><button className="btn btn-success">Dashboard</button></Link>
+                <Link to="/all-complaints"><button className="btn btn-success">View All</button></Link>
             </div>
 
 
@@ -64,10 +64,7 @@ const ComplaintForms = () => {
                         })) : (
 
                         <div className="d-flex flex-column">
-                            <h2>No blocks</h2>
-                            <button className="btn btn-danger w-25" onClick={goBack}>
-                                Go Back
-                            </button>
+                            <h2>No blocks</h2>                            
                         </div>
 
                     )

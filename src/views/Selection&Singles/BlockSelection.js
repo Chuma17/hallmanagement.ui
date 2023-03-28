@@ -34,8 +34,8 @@ const BlockSelection = () => {
     return <>
         <div className="container ms-auto me-auto mt-3">
 
-            <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
-                <button className="btn btn-danger" onClick={goBack}>Go Back</button>
+            <div style={{ borderRadius: "10px" }} className="d-flex bg-dark justify-content-between p-4 text-light">
+                <Link to="/selection"><button className="btn btn-danger">Go Back</button></Link>
                 <h3>Blocks [ {blocks.length} ]</h3>
                 <Link to="/select-room"><button className="btn btn-success">Select Room</button></Link>
             </div>
@@ -57,7 +57,6 @@ const BlockSelection = () => {
                                         <p style={{ textAlign: "left" }}>Room count: {block.roomCount}</p>
                                         <p style={{ textAlign: "left" }}>Available Rooms: {block.availableRooms} </p>
                                         <p style={{ textAlign: "left" }}>Students in the block: {block.studentCount} </p>
-                                        <hr />
 
                                         <hr />
                                         <Link to={`/view-select-block/${block.blockId}`}><button className="btn btn-light">View Block</button></Link>

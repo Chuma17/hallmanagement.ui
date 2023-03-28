@@ -85,6 +85,8 @@ const SingleExitPass = () => {
                         Approve
                     </button>
                 )}
+                <Link to={`/view-student/${exitPass.studentId}`}><button className="btn btn-success">View Student details</button></Link>
+
             </section>
 
         </>}

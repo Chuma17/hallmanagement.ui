@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
 const SingleSelectHall = () => {
@@ -10,6 +10,9 @@ const SingleSelectHall = () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     const [hall, setHall] = useState({});
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
 
@@ -39,9 +42,7 @@ const SingleSelectHall = () => {
             const updatedStudent = JSON.stringify(user);
             localStorage.setItem('user', updatedStudent);
 
-            window.alert(response.data);
-            window.location.reload();
-            console.log(response);
+            setSuccess(response.data);
         }
 
         catch (error) {
@@ -51,8 +52,7 @@ const SingleSelectHall = () => {
                 navigate("/student-login");
             }
             else {
-                console.log(error.response.data);
-                window.alert(error.response.data);
+                setError(error.response.data);
             }
         }
     }
@@ -73,9 +73,7 @@ const SingleSelectHall = () => {
             const updatedStudent = JSON.stringify(user);
             localStorage.setItem('user', updatedStudent);
 
-            window.alert(response.data);
-            window.location.reload();
-            console.log(response);
+            setSuccess(response.data);
         }
 
         catch (error) {
@@ -85,30 +83,78 @@ const SingleSelectHall = () => {
                 navigate("/student-login");
             }
             else {
-                console.log(error.response.data);
-                window.alert(error.response.data);
+                setError(error.response.data);
             }
         }
-    }    
+    }
 
     useEffect(() => {
         getHall(hallId);
     }, [hallId])
 
+
+    useEffect(() => {
+        let errorTimeoutId;
+        let successTimeoutId;
+
+        if (error) {
+            errorTimeoutId = setTimeout(() => {
+                setError(null);
+                window.location.reload();
+            }, 2000);
+        }
+
+        if (success) {
+            successTimeoutId = setTimeout(() => {
+                setSuccess(null);
+                window.location.reload();
+            }, 1000);
+        }
+
+        return () => {
+            clearTimeout(errorTimeoutId);
+            clearTimeout(successTimeoutId);
+        };
+
+    }, [error, success]);
+
     return <>
-        <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
 
         {hall && <>
 
-            <section className="bg-dark text-light p-4 mt-5">
-                <h4>{hall.hallName}</h4>
-                <h4>{hall.hallType}</h4>
-                <h6>Hall Admin: {hall.hallAdminName}</h6>
-                <h6>Room Count: {hall.roomCount}</h6>
-                <h6>Block Count: {hall.blockCount}</h6>
-                <h6>Students in hall: {hall.studentCount}</h6>
-                <h6>Available Rooms: {hall.availableRooms}</h6>
-                <h6>Maximum Students in a Room: {hall.roomSpace}</h6>
+            <section className="container bg-dark text-light p-4 mt-5" style={{ borderRadius: "10px", width: '50rem', height: 'fit-content' }}>
+                <div className="d-flex justify-content-between">
+
+                    <div >
+                        <Link to="/select-hall"><button className="btn btn-danger">Go Back</button></Link>
+                    </div>
+                    <div>
+                        <h4 className="">{hall.hallType} | {hall.hallName}</h4>
+                    </div>
+                    <div className="ms-5">
+
+                    </div>
+                </div>
+
+                <hr />
+
+                {error && <div className="alert alert-danger text-center">{error}</div>}
+                {success && <div className="alert alert-success text-center">{success}</div>}
+
+                <div className="d-flex justify-content-between">
+                    <div>
+                        <h6 className="fs-5 mt-5">Hall Admin : {hall.hallAdminName}</h6>
+                        <h6 className="fs-5 mt-5">Room Count : {hall.roomCount}</h6>
+                        <h6 className="fs-5 mt-5 mb-5">Block Count : {hall.blockCount}</h6>
+                    </div>
+
+                    <div>
+                        <h6 className="fs-5 mt-5">Students in hall : {hall.studentCount}</h6>
+                        <h6 className="fs-5 mt-5">Available Rooms : {hall.availableRooms}</h6>
+                        <h6 className="fs-5 mt-5 mb-5">Maximum Students in a Room : {hall.roomSpace}</h6>
+                    </div>
+                </div>
+
                 <hr />
 
                 {user.hallId ? (

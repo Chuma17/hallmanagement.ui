@@ -1,0 +1,8 @@
+body {
+    background-image: url('/public/images/background.jpg');
+    background-size: cover;
+}
+
+.block-box{
+    background: rgb(180, 180, 180);
+}

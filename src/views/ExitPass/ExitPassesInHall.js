@@ -1,25 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useParams } from "react-router";
 import axios from "axios";
 
-const ComplaintsInRoom = () => {
+const ExitPassesInHall = () => {
 
-    let params = useParams();
-    const roomId = params.id;
-
-    const [complaints, setComplaints] = useState([]);
-
+    const [exitPasses, setExitPasses] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
+    const hallId = user.hallId;
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
-    
 
     useEffect(() => {
-        async function getComplaints() {
+        async function getExitPasses() {
 
             try {
-                const { data } = await axios.get(`https://localhost:44324/api/ComplaintForm/get-complaints-in-room/${roomId}`,
+                const { data } = await axios.get(`https://localhost:44324/api/ExitPass/get-exitPasses-in-hall/${hallId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${user.accessToken}`
@@ -27,7 +22,7 @@ const ComplaintsInRoom = () => {
                     }
                 );
 
-                setComplaints(data);
+                setExitPasses(data);
             }
 
             catch (error) {
@@ -38,51 +33,56 @@ const ComplaintsInRoom = () => {
                     navigate("/hallAdmin-login");
                 }
                 else {
-                    window.alert(error.response.data);
-                    console.error(error.response.data);
+                    console.error(error);
                 }
             }
         }
 
-        getComplaints();
-    }, [setComplaints]);
+        getExitPasses();
+    }, [setExitPasses]);
 
     return <>
-
         <div className="container ms-auto me-auto mt-3">
+
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
-                <h3>COMPLAINTS [ {complaints.length} ]</h3>
-                <Link to="/hallAdmin-dashboard"><button className="btn btn-success">Dashboard</button></Link>
+                <h3>ALL EXIT PASSES [ {exitPasses.length} ]</h3>
+                <Link to="/hallAdmin-dashboard"><button className="btn btn-success">DashBoard</button></Link>
             </div>
 
             <table className="table table-striped mt-4 fs-5">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Plumbing</th>
-                        <th scope="col">Carpentary</th>
-                        <th scope="col">Electrical</th>
-                        <th scope="col">Others</th>
+                        <th scope="col">Exit Date</th>
+                        <th scope="col">Return Date</th>
+                        <th scope="col">State of Arrival</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        complaints?.map((user, i) => (
+                        exitPasses.length > 0 ? exitPasses.map((exitPass, i) => (
                             <tr>
                                 <th scope="row">{i + 1}</th>
-                                <td>{user?.plumbing}</td>
-                                <td>{user?.carpentary}</td>
-                                <td>{user?.electrical}</td>
-                                <td>{user?.others}</td>
+                                <td>{exitPass.dateOfExit.substring(0, 10)}</td>
+                                <td>{exitPass.dateOfReturn.substring(0, 10)}</td>
+                                <td>{exitPass.stateOfArrival}</td>
+                                <td> <Link to={`/view-exitPass/${exitPass.exitPassId}`}><button className="btn btn-success">View Pass</button></Link></td>
                             </tr>
-                        ))
+                        )) : (
+                            <>
+                                <div className="text-center mt-3">
+                                    <h2>No Exit Passes</h2>
+                                </div>
+                            </>
+                        )
                     }
                 </tbody>
             </table>
-        </div>
 
+        </div>
     </>
 }
 
-export default ComplaintsInRoom;
+export default ExitPassesInHall;

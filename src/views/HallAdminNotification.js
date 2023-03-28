@@ -12,8 +12,29 @@ const HallAdminNotifications = () => {
 
     useEffect(() => {
         async function getNotifications() {
-            const { data } = await axios.get(`https://localhost:44324/api/Hall/get-notifications-in-hall/${hallId}`);
-            setNotifications(data);
+            
+            try {
+                const { data } = await axios.get(`https://localhost:44324/api/Notification/get-notifications-in-hall/${hallId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`
+                        }
+                    });
+                setNotifications(data);
+
+            }
+
+            catch (error) {
+                if (error.response.status === 401) {
+                    window.alert("Your session has expired. Login again!");
+                    localStorage.removeItem("user");
+                    navigate("/hallAdmin-login");
+                }
+                else {
+                    console.error(error.response.data);
+                }
+            }
+
         }
 
         getNotifications();
@@ -25,7 +46,7 @@ const HallAdminNotifications = () => {
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
                 <button className="btn btn-danger" onClick={goBack}>Go Back</button>
                 <h3>Notifications [ {notifications.length} ]</h3>
-                <Link to="/add-notification"><button className="btn btn-success">Add</button></Link>
+                <Link to="/add-notification"><button className="btn btn-success">Post</button></Link>
             </div>
 
             <div className="row mt-2">
@@ -46,11 +67,8 @@ const HallAdminNotifications = () => {
                     })
 
                 ) : (
-                    <div className="d-flex flex-column">
+                    <div className="text-center mt-3">
                         <h2>No Notifications</h2>
-                        <button className="btn btn-danger w-25" onClick={goBack}>
-                            Go Back
-                        </button>
                     </div>
                 )}
 

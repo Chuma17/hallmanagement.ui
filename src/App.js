@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
 //Components
@@ -6,7 +6,7 @@ import Layout from './components/Layout';
 import Missing from './components/Missing';
 import Unauthorized from './components/Unauthorized';
 import RequireAuth from './components/RequireAuth';
-import Header from './components/Header';
+import HeaderForLogin from './components/HeaderForLogin';
 
 //Login
 import StudentLogin from './views/Login&Reg/StudentLogin';
@@ -34,10 +34,10 @@ import SingleHall from './views/Singles/SingleHall';
 import HomePage from './views/HomePage';
 import StudentDevices from './views/StudentDevices';
 import AddStudentDevice from './views/AddStudentDevice';
-import StudentExitPass from './views/StudentExitPass';
-import AddExitPass from './views/AddExitPass';
+import StudentExitPass from './views/ExitPass/StudentExitPass';
+import AddExitPass from './views/ExitPass/AddExitPass';
 import SingleExitPass from './views/Singles/SingleExitPass';
-import SingleStudentExitPass from './views/Selection&Singles/SingleStudentExitPass';
+import SingleStudentExitPass from './views/Singles/SingleStudentExitPass';
 import Selection from './views/Selection&Singles/Selection';
 import HallTypeSelection from './views/Selection&Singles/HallTypeSelection';
 import HallSelection from './views/Selection&Singles/HallSelection';
@@ -46,7 +46,7 @@ import BlockSelection from './views/Selection&Singles/BlockSelection';
 import SingleSelectBlock from './views/Selection&Singles/SingleSelectBlock';
 import RoomSelection from './views/Selection&Singles/RoomSelection';
 import SingleSelectRoom from './views/Selection&Singles/SingleSelectRoom';
-import AddComplaintForm from './views/AddComplaintForm';
+import AddComplaintForm from './views/ComplaintForm/AddComplaintForm';
 import HallTypes from './views/HallTypes';
 import AddHallType from './views/AddHallType';
 import Halls from './views/Halls';
@@ -62,13 +62,17 @@ import Rooms from './views/Rooms';
 import Notifications from './views/Notifications';
 import HallAdminNotifications from './views/HallAdminNotification';
 import AddNotification from './views/AddNotification';
-import ExitPasses from './views/ExitPasses';
-import UnapprovedExitPasses from './views/UnapprovedExitPasses';
-import ApprovedExitPasses from './views/ApprovedExitPasses';
+import ExitPasses from './views/ExitPass/ExitPasses';
+import UnapprovedExitPasses from './views/ExitPass/UnapprovedExitPasses';
+import ApprovedExitPasses from './views/ExitPass/ApprovedExitPasses';
 import StudentsInHall from './views/StudentsInHall';
-import ComplaintForms from './views/ComplaintForms';
-import RoomsForComplaint from './views/RoomsForComplaint';
-import ComplaintsInRoom from './views/ComplaintsInRoom';
+import ComplaintForms from './views/ComplaintForm/ComplaintForms';
+import RoomsForComplaint from './views/ComplaintForm/RoomsForComplaint';
+import ComplaintsInRoom from './views/ComplaintForm/ComplaintsInRoom';
+import StudentsDue from './views/ExitPass/StudentsDue';
+import StudentsOverDue from './views/ExitPass/StudentsOverDue';
+import ComplaintsInHall from './views/ComplaintForm/ComplaintsInHall';
+import ExitPassesInHall from './views/ExitPass/ExitPassesInHall';
 
 const ROLES = {
   'Student': "Student",
@@ -80,14 +84,14 @@ const ROLES = {
 const App = () => {
   return <>
 
-    <Header />
+    <HeaderForLogin />
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
 
         <Route path="/" exact element={<HomePage />} />
         <Route path="/student-login" element={<StudentLogin />} />        
-        <Route path="/student-registeration" element={<StudentRegistration />} />        
+        <Route path="/student-registration" element={<StudentRegistration />} />        
         <Route path="/porter-login" element={<PorterLogin />} />
         <Route path="/hallAdmin-login" element={<HallAdminLogin />} />
         <Route path="/chiefHallAdmin-login" element={<ChiefHallAdminLogin />} />
@@ -122,27 +126,36 @@ const App = () => {
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Student, ROLES.HallAdmin, ROLES.Porter]} />}>
-          <Route path="/view-exitPass/:id" element={<SingleExitPass />} />
+          
+          <Route path="/view-admin-exitPass/:id" element={<SingleExitPass />} />
+        
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.HallAdmin]} />}>
+
           <Route path="/hallAdmin-dashboard" element={<HallAdminDashboard />} />
           <Route path="/blocks" element={<Blocks />} />
           <Route path="/add-block" element={<AddBlock />} />
           <Route path="/view-rooms-in-block/:id" element={<Rooms />} />
           <Route path="/hallAdmin-notifications" element={<HallAdminNotifications />} />
           <Route path="/exit-passes" element={<ExitPasses />} />
+          <Route path="/all-exitPasses" element={<ExitPassesInHall />} />
           <Route path="/pending-exitPass" element={<UnapprovedExitPasses />} />
           <Route path="/approved-exitPass" element={<ApprovedExitPasses />} />
           <Route path="/add-notification" element={<AddNotification />} />
           <Route path="/students" element={<StudentsInHall />} />
           <Route path="/complaint-forms" element={<ComplaintForms />} />
+          <Route path="/all-complaints" element={<ComplaintsInHall />} />
           <Route path="/view-complaintRooms/:id" element={<RoomsForComplaint />} />
           <Route path="/view-complaints/:id" element={<ComplaintsInRoom />} />
+          <Route path="/students-due" element={<StudentsDue />} />
+          <Route path="/students-overdue" element={<StudentsOverDue />} />
 
         </Route>
 
+
         <Route element={<RequireAuth allowedRoles={[ROLES.ChiefHallAdmin]} />}>
+          
           <Route path="/chiefHallAdmin-dashboard" element={<ChiefHallAdminDashboard />} />
           <Route path="/hall-types" element={<HallTypes />} />
           <Route path="/add-hall-type" element={<AddHallType />} />
@@ -156,7 +169,9 @@ const App = () => {
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Porter]} />}>
+          
           <Route path="/porter-dashboard" element={<PorterDashboard />} />
+        
         </Route>
 
 

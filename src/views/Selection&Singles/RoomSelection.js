@@ -37,7 +37,7 @@ const RoomSelection = () => {
         <div className="container ms-auto me-auto mt-3">
 
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
-                <button className="btn btn-danger" onClick={goBack}>Go Back</button>
+                <Link to="/selection"><button className="btn btn-danger">Go Back</button></Link>
                 <h3>Rooms [ {rooms.length} ]</h3>
                 <Link to="/student-dashboard"><button className="btn btn-success">Dashboard</button></Link>
             </div>
@@ -49,7 +49,7 @@ const RoomSelection = () => {
                         rooms.map(room => {
                             <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
 
-                            return <div className="col-md-4 d-flex justify-content-around">
+                            return <div className="col-md-3 d-flex justify-content-around">
 
                                 <div className="card mt-4 mb-4 bg-dark text-light" style={{ width: "18rem", borderRadius: "5%" }}>
                                     <div className="card-body text-center fs-5">
@@ -58,7 +58,6 @@ const RoomSelection = () => {
 
                                         <p style={{ textAlign: "left" }}>Maximum students: {room.maxOccupants}</p>
                                         <p style={{ textAlign: "left" }}>Available Space: {room.availableSpace} </p>
-                                        <p style={{ textAlign: "left" }}>Students in the room: {room.studentCount} </p>
                                         <hr />
 
                                         <p style={{ textAlign: "left" }}>Room Available: {room.isUnderMaintenance === true && <span>No</span>} {room.isUnderMaintenance === false && <span>Yes</span>} </p>

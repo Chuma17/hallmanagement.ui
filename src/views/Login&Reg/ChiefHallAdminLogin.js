@@ -7,67 +7,93 @@ const ChiefHallAdminLogin = () => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState();
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     async function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         try {
             const response = await axios.post("https://localhost:44324/api/ChiefHallAdmin/chiefHallAdmin-login", { userName, password });
 
             if (response.status === 200) {
+                setIsLoading(false);
                 localStorage.setItem("user", JSON.stringify(response.data));
-                console.log(response.data)
                 navigate("/chiefHallAdmin-dashboard");
             }
 
         } catch (error) {
-            console.log(error.response.data)
-            window.alert(error.response.data.message)
-
+            setIsLoading(false);
+            setError(error.response.data.message);
         }
-                       
+
 
     };
 
-return <>
-    <form className="login-form form w-75s" onSubmit={submitHandler}>
+    return <>
+        <section className="vh-110" >
+            <div className="container py-5 mt-5 h-100">
+                <div className="row d-flex justify-content-center align-items-center h-100">
+                    <div className="col col-xl-8">
+                        <div className="card" style={{ borderRadius: '1rem' }}>
+                            <div className="row g-0">
 
-        <h3 className="mt-3 mb-3 ms-4">Login</h3>
-        <hr />
+                                <div className="col-md-6 col-lg-5 d-none d-md-block mt-auto mb-auto">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                                        alt="login form" className="img-fluid" style={{ borderRadius: '1rem 0 0 1rem' }} />
+                                </div>
 
-        <div className="mb-4 me-4 ms-4">
-            <label className="form-label" htmlFor="userNameAddress">User Name</label>
-            <input
-                type="text"
-                id="userNameAddress"
-                value={userName}
-                onChange={e => setUserName(e.target.value)}
-                required
-                className="form-control"
-            />
-        </div>
+                                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                                    <div className="card-body p-4 p-lg-5 text-black ">
 
-        <div className="mb-4 me-4 ms-4">
-            <label className="form-label" htmlFor="userPassword">Password</label>
-            <input
-                type="password"
-                id="userPassword"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                className="form-control"
-            />
-        </div>
+                                        <form className="form" onSubmit={submitHandler}>
 
-        <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 ms-4 mb-4 mt-4">
-            Sign in
-        </button>
+                                            <h5 className="fw-normal mb-3 pb-3 text-center" style={{ letterSpacing: '1px' }}>Chief Hall Admin Login</h5>
 
-        <p className="mb-2 pb-lg-2 mb-4 text-center">Don't have an account? <Link to="/register">Register here</Link></p>
+                                            {error && <div className="me-4 ms-4 alert alert-danger text-center" style={{ letterSpacing: '1px' }}>{error}</div>}
 
-    </form>
-</>
+                                            <div className="mb-4 me-4 ms-4">
+                                                <label className="form-label" htmlFor="userNameAddress">User Name</label>
+                                                <input
+                                                    type="text"
+                                                    id="userNameAddress"
+                                                    value={userName}
+                                                    onChange={e => setUserName(e.target.value)}
+                                                    required
+                                                    className="form-control"
+                                                />
+                                            </div>
+
+                                            <div className="mb-3 me-4 ms-4">
+                                                <label className="form-label" htmlFor="userPassword">Password</label>
+                                                <input
+                                                    type="password"
+                                                    id="userPassword"
+                                                    value={password}
+                                                    onChange={e => setPassword(e.target.value)}
+                                                    required
+                                                    className="form-control"
+                                                />
+                                            </div>
+
+                                            <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 ms-4 mb-4 mt-4">
+                                                {isLoading ? 'LOADING' : 'Sign in'}
+                                            </button>
+                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/">Go to Home</Link></p>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </>
 }
 
 export default ChiefHallAdminLogin;

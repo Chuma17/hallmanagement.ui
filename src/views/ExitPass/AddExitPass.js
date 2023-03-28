@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-const AddStudentDevice = () => {
+const AddExitPass = () => {
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
     const user = JSON.parse(localStorage.getItem('user'));
 
-    const [item, setItem] = useState("");
-    const [color, setColor] = useState("");
-    const [description, setDescription] = useState("");
-    const [serialNo, setSerialNo] = useState("");
+    const [dateOfExit, setDateOfExit] = useState("");
+    const [stateOfArrival, setStateOfArrival] = useState("");
+    const [address, setAddress] = useState("");
+    const [reasonForLeaving, setReasonForLeaving] = useState("");
+    const [dateOfReturn, setDateOfReturn] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
@@ -18,8 +19,8 @@ const AddStudentDevice = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`https://localhost:44324/api/StudentDevice/add-studentDevice`,
-                { item, color, description, serialNo },
+            const response = await axios.post(`https://localhost:44324/api/ExitPass/add-exitPass`,
+                { dateOfExit, stateOfArrival, address, reasonForLeaving, dateOfReturn },
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
@@ -50,14 +51,13 @@ const AddStudentDevice = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-                // window.location.reload();
             }, 2000);
         }
 
         if (success) {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
-                navigate("/student-devices")
+                navigate("/student-exit-passes")
             }, 1000);
         }
 
@@ -69,6 +69,7 @@ const AddStudentDevice = () => {
     }, [error, success]);
 
     return <>
+
         <section className="background-radial-gradient overflow-hidden">
 
             <div className="container px-4 py-2 px-md-5 text-center text-lg-start my-5">
@@ -83,54 +84,69 @@ const AddStudentDevice = () => {
                             <div className="card-body px-4 py-5 px-md-5">
 
                                 <form className="form" onSubmit={submitHandler}>
-                                    <h5 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Register Device</h5>
+                                    <h5 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Request Exit Pass</h5>
 
                                     {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
                                     {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
 
                                     <div className="mb-4 me-4 ms-4">
-                                        <label className="form-label" htmlFor="itemAddress">Item Name</label>
+                                        <label className="form-label" htmlFor="itemAddress">Date of Exit</label>
                                         <input
-                                            type="text"
+                                            type="date"
                                             id="itemAddress"
-                                            value={item}
-                                            onChange={e => setItem(e.target.value)}
+                                            value={dateOfExit}
+                                            onChange={e => setDateOfExit(e.target.value)}
+                                            placeholder="dd/mm/yyyy"
                                             required
                                             className="form-control"
                                         />
                                     </div>
 
                                     <div className="mb-4 me-4 ms-4">
-                                        <label className="form-label" htmlFor="itemColor">Color</label>
+                                        <label className="form-label" htmlFor="itemColor">State of Arrival</label>
                                         <input
                                             type="text"
                                             id="itemColor"
-                                            value={color}
-                                            onChange={e => setColor(e.target.value)}
+                                            value={stateOfArrival}
+                                            onChange={e => setStateOfArrival(e.target.value)}
                                             required
                                             className="form-control"
                                         />
                                     </div>
 
                                     <div className="mb-4 me-4 ms-4">
-                                        <label className="form-label" htmlFor="itemDescription">Description</label>
-                                        <input
+                                        <label className="form-label" htmlFor="itemDescription">Address</label>
+                                        <textarea
                                             type="text"
+                                            rows={3}
                                             id="itemDescription"
-                                            value={description}
-                                            onChange={e => setDescription(e.target.value)}
+                                            value={address}
+                                            onChange={e => setAddress(e.target.value)}
                                             required
                                             className="form-control"
                                         />
                                     </div>
 
                                     <div className="mb-4 me-4 ms-4">
-                                        <label className="form-label" htmlFor="itemSerialNo">Serial Number</label>
-                                        <input
+                                        <label className="form-label" htmlFor="itemSerialNo">Reason for leaving</label>
+                                        <textarea
                                             type="text"
+                                            rows={3}
                                             id="itemSerialNo"
-                                            value={serialNo}
-                                            onChange={e => setSerialNo(e.target.value)}
+                                            value={reasonForLeaving}
+                                            onChange={e => setReasonForLeaving(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="SerialNo">Date of Return</label>
+                                        <input
+                                            type="date"
+                                            id="SerialNo"
+                                            value={dateOfReturn}
+                                            onChange={e => setDateOfReturn(e.target.value)}
                                             required
                                             className="form-control"
                                         />
@@ -139,7 +155,7 @@ const AddStudentDevice = () => {
                                     <div className="text-center">
 
                                         <button type="submit" className="btn btn-dark w-25 btn-block mb-4">
-                                            Add
+                                            Submit
                                         </button>
                                     </div>
 
@@ -154,4 +170,4 @@ const AddStudentDevice = () => {
     </>
 }
 
-export default AddStudentDevice;
+export default AddExitPass;

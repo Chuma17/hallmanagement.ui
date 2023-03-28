@@ -53,21 +53,30 @@ const StudentRegistration = () => {
 
     return <>
 
-        <section className="background-radial-gradient overflow-hidden">
+        <section class="ms-auto me-auto">
+            <div class="p-5 bg-image" style={{
+                backgroundImage: "url('https://mdbootstrap.com/img/new/textures/full/171.jpg')",
+                backgroundSize: "cover",
+                height: "300px"
+            }}
+            ></div>
 
-            <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-                <div className="row gx-lg-5 align-items-center mb-4">
+            <div className="container">
 
-                    <div className="col-lg-8 mb-5 ms-auto me-auto mb-lg-0 position-relative">
-                        <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
-                        <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+                <div class="card col-md-11 mx-4 mx-md-5 shadow-5-strong" style={{
+                    marginTop: "-120px",
+                    background: "hsla(0, 0%, 100%, 0.8)",
+                    backdropFilter: "blur(30px);"
+                }}
+                >
+                    <div class="card-body py-5 px-md-2">
 
-                        <div className="card bg-glass">
-                            <div className="card-body px-4 py-5 px-md-5">
-
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-9">
+                                <h2 class="fw-bold mb-5 pb-3 text-center" style={{ letterSpacing: '1px' }}>Student Registration</h2>
                                 <form className="form" onSubmit={submitHandler}>
 
-
+                                    <hr />
 
                                     <div className="row">
                                         <div className="col-md-6 mb-4">
@@ -183,41 +192,27 @@ const StudentRegistration = () => {
                                             />
                                         </div>
                                     </div>
-
-                                    <button type="submit" className="btn btn-dark btn-outline-danger btn-block mb-4">
-                                        Sign up
-                                    </button>
-
-                                    <p className="mb-2 pb-lg-2 text-center">Already have an account? <Link to="/student-login"
-                                        style={{ color: '#393f81' }}>Login here</Link></p>
+                                    <hr />
 
                                     <div className="text-center">
-                                        <p>or sign up with:</p>
-                                        <button type="button" className="btn btn-link btn-floating mx-1">
-                                            <i className="fab fa-facebook-f"></i>
-                                        </button>
 
-                                        <button type="button" className="btn btn-link btn-floating mx-1">
-                                            <i className="fab fa-google"></i>
-                                        </button>
-
-                                        <button type="button" className="btn btn-link btn-floating mx-1">
-                                            <i className="fab fa-twitter"></i>
-                                        </button>
-
-                                        <button type="button" className="btn btn-link btn-floating mx-1">
-                                            <i className="fab fa-github"></i>
+                                        <button type="submit" className="btn btn-dark w-50 btn-block mb-4">
+                                            Sign up
                                         </button>
                                     </div>
 
+                                    <p className="mb-2 pb-lg-2 text-center">Already have an account? <Link to="/student-login"
+                                        style={{ color: '#393f81' }}>Login here</Link></p>
+                                    <p className="mb-2 pb-lg-2 mb-4 text-center"><Link to="/">Go to Home</Link></p>
+
                                 </form>
-                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>        
+
+        </section>
     </>
 }
 

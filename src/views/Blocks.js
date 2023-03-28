@@ -53,7 +53,7 @@ const Blocks = () => {
 
                             <div className="card mt-4 mb-4 bg-dark text-light" style={{ width: "18rem", borderRadius: "5%" }}>
                                 <div className="card-body text-center fs-5">
-                                    <h3 className="card-title">{block.blockName} Block</h3>
+                                    <h3 className="card-title">{block.blockName} | Block</h3>
                                     <hr />
                                     <p>{block.roomCount && block.roomCount !== 0 ? block.roomCount : <span>No</span>} {block.roomCount === 0 && <span>rooms</span>} {block.roomCount === 1 && <span>room</span>} {block.roomCount > 1 && <span>rooms</span>} </p>
                                     <p>{block.roomSpace} in a room</p>

@@ -46,11 +46,8 @@ const Notifications = () => {
                     })
 
                 ) : (
-                    <div className="d-flex flex-column">
-                        <h2>No Notifications</h2>
-                        <button className="btn btn-danger w-25" onClick={goBack}>
-                            Go Back
-                        </button>
+                    <div className="text-center mt-4">
+                        <h2>No Notifications</h2>                        
                     </div>
                 )}
 

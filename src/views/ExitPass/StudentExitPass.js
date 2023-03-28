@@ -49,36 +49,36 @@ const StudentExitPass = () => {
                 <Link to="/add-exit-pass"><button className="btn btn-success">Add Exit Pass</button></Link>
             </div>
 
-            <div className="row">
-
-                {exitPasses.length > 0 ? (
-                    exitPasses.map(exitPass => {
-
-                        return <div className="col-4 d-flex justify-content-around">
-
-                            <div className="card mt-4 mb-4 bg-dark text-light fs-5" style={{ width: "18rem", borderRadius: "5%" }}>
-                                <div className="card-body text-center">
-                                    <p>Exit Date : {exitPass.dateOfExit.substring(0, 10)}</p>
-                                    <p>Return Date : {exitPass.dateOfReturn.substring(0, 10)}</p>
-                                    <p>State : {exitPass.stateOfArrival}</p>
-                                    <hr />
-                                    <Link to={`/view-student-exitPass/${exitPass.exitPassId}`}><button className="btn btn-light">View Pass</button></Link>
+            <table className="table table-striped mt-4 fs-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Exit Date</th>
+                        <th scope="col">Return Date</th>
+                        <th scope="col">State of Arrival</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        exitPasses.length > 0 ? exitPasses.map((exitPass, i) => (
+                            <tr>
+                                <th scope="row">{i + 1}</th>
+                                <td>{exitPass.dateOfExit.substring(0, 10)}</td>
+                                <td>{exitPass.dateOfReturn.substring(0, 10)}</td>
+                                <td>{exitPass.stateOfArrival}</td>
+                                <td> <Link to={`/view-student-exitPass/${exitPass.exitPassId}`}><button className="btn btn-success">View Pass</button></Link></td>
+                            </tr>
+                        )) : (
+                            <>
+                                <div className="text-center mt-3">
+                                    <h2>No Exit Passes</h2>
                                 </div>
-                            </div>
-                        </div>
-                    })
-
-                ) : (
-
-                    <div className="d-flex flex-column">
-                        <h2>No Exit Passes</h2>
-                        <button className="btn btn-danger w-25" onClick={goBack}>
-                            Go Back
-                        </button>
-                    </div>
-                )}
-
-            </div>
+                            </>
+                        )
+                    }
+                </tbody>
+            </table>            
         </div>
     </>
 }

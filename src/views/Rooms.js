@@ -70,32 +70,30 @@ const Rooms = () => {
     }
 
     async function deleteHandler(roomId) {
-        if (window.confirm('Confirm delete?')) {
 
-            try {
-                const response = await axios.delete(`https://localhost:44324/api/Room/delete-room/${roomId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user.accessToken}`
-                        }
-                    });
+        try {
+            const response = await axios.delete(`https://localhost:44324/api/Room/delete-room/${roomId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                });
 
-                if (response.status === 200) {
-                    window.location.reload();
-                }
+            if (response.status === 200) {
+                window.location.reload();
             }
+        }
 
-            catch (error) {
-                if (error.response.status === 401) {
-                    window.alert("Your session has expired. Login again!");
-                    localStorage.removeItem("user");
+        catch (error) {
+            if (error.response.status === 401) {
+                window.alert("Your session has expired. Login again!");
+                localStorage.removeItem("user");
 
-                    navigate("/HallAdmin-login");
-                }
-                else {
-                    window.alert(error.response.data);
-                    console.error(error.response.data);
-                }
+                navigate("/HallAdmin-login");
+            }
+            else {
+                window.alert(error.response.data);
+                console.error(error.response.data);
             }
         }
     }
@@ -139,7 +137,7 @@ const Rooms = () => {
                 {rooms.length > 0 ? (
                     rooms.map(room => {
 
-                        return <div className="col-md-4 d-flex justify-content-around">
+                        return <div className="col-md-3 d-flex justify-content-around">
 
                             <div className="card mt-4 mb-4 bg-dark text-light" style={{ width: "18rem", borderRadius: "5%" }}>
                                 <div className="card-body text-center fs-5">
@@ -161,11 +159,8 @@ const Rooms = () => {
 
                 ) : (
 
-                    <div className="d-flex flex-column">
-                        <h2>No Rooms</h2>
-                        <button className="btn btn-danger w-25" onClick={goBack}>
-                            Go Back
-                        </button>
+                    <div className="text-center mt-4">
+                        <h2>No Rooms</h2>                        
                     </div>
 
                 )}

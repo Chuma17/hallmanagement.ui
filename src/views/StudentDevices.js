@@ -50,26 +50,36 @@ const StudentDevices = () => {
                 <Link to="/add-device"><button className="btn btn-success">Add Device</button></Link>
             </div>
 
-            <div className="row">
-
-                {studentDevices && studentDevices.map(device => {
-
-                    return <div className="col-4 d-flex justify-content-around">
-
-                        <div className="card mt-4 mb-4 bg-dark text-light fs-5" style={{ width: "18rem", borderRadius: "5%" }}>
-                            <div className="card-body text-center">
-                                <h4 className="card-title mb-3">Item: {device.item}</h4>
-                                <hr />
-                                <p>S/N: {device.serialNo}</p>
-                                <p>Color: {device.color}</p>
-                                <hr />
-                                <p>Description: {device.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                })}
-
-            </div>
+            <table className="table table-striped mt-4 fs-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Serial No</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Device Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        studentDevices.length > 0 ? studentDevices.map((device, i) => (
+                            <tr>
+                                <th scope="row">{i + 1}</th>
+                                <td>{device.item}</td>
+                                <td>{device.serialNo}</td>
+                                <td>{device.color}</td>
+                                <td>{device.description}</td>
+                            </tr>
+                        )) : (
+                            <>
+                                <div className="text-center mt-3">
+                                    <h2>No Devices</h2>
+                                </div>
+                            </>
+                        )
+                    }
+                </tbody>
+            </table>            
         </div>
     </>
 }

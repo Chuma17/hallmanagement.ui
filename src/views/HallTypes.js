@@ -10,32 +10,30 @@ const HallTypes = () => {
     const [hallTypes, setHallTypes] = useState([]);
 
     async function deleteHandler(hallTypeId) {
-        if (window.confirm('Confirm delete?')) {
 
-            try {
-                const response = await axios.delete(`https://localhost:44324/api/HallType/delete-hallType/${hallTypeId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user.accessToken}`
-                        }
-                    });
+        try {
+            const response = await axios.delete(`https://localhost:44324/api/HallType/delete-hallType/${hallTypeId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                });
 
-                if (response.status === 200) {
-                    window.location.reload();
-                }
+            if (response.status === 200) {
+                window.location.reload();
             }
+        }
 
-            catch (error) {
-                if (error.response.status === 401) {
-                    window.alert("Your session has expired. Login again!");
-                    localStorage.removeItem("user");
+        catch (error) {
+            if (error.response.status === 401) {
+                window.alert("Your session has expired. Login again!");
+                localStorage.removeItem("user");
 
-                    navigate("/chiefHallAdmin-login");
-                }
-                else {
-                    window.alert(error.response.data);
-                    console.error(error.response.data);
-                }
+                navigate("/chiefHallAdmin-login");
+            }
+            else {
+                window.alert(error.response.data);
+                console.error(error.response.data);
             }
         }
     }

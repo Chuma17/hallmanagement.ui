@@ -59,7 +59,7 @@ const RoomsForComplaint = () => {
                                     <h3 className="card-title">Room {room.roomNumber}</h3>
                                     <p>{room.studentCount && room.studentCount !== 0 ? room.studentCount : <span>No</span>} {room.studentCount === 0 && <span>students in room</span>} {room.studentCount === 1 && <span>student in room</span>} {room.studentCount > 1 && <span>students in room</span>}</p>
                                     <hr />
-                                    <Link to={`/view-complaints/${room.roomId}`}><button className="btn btn-light">View Pass</button></Link>
+                                    <Link to={`/view-complaints/${room.roomId}`}><button className="btn btn-light">View Complaints</button></Link>
                                 </div>
                             </div>
                         </div>

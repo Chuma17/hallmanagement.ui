@@ -45,9 +45,9 @@ const PorterDashboard = () => {
         <div className="container ms-auto me-auto mt-3">
 
             <div style={{ borderRadius: "10px" }} className="d-flex justify-content-between bg-dark p-4 text-light">
-                <button className="btn btn-danger" onClick={goBack}>Go Back</button>
+                <button className="btn btn-danger" disabled></button>
                 <h3>STUDENT DEVICES [ {studentDevices.length} ]</h3>
-                <Link to="/add-device"><button className="btn btn-success">Add Device</button></Link>
+                <button className="btn btn-success" disabled></button>
             </div>
 
             <form class="form-inline my-3" onSubmit={getDevices}>
@@ -59,30 +59,36 @@ const PorterDashboard = () => {
                     placeholder="Search"
                     required
                     className="form-control"
-                />                    
+                />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
 
-            <div className="row">
-
-                {studentDevices && studentDevices.map(device => {
-
-                    return <div className="col-4 d-flex justify-content-around">
-
-                        <div className="card mt-4 mb-4 bg-dark text-light fs-5" style={{ width: "18rem", borderRadius: "5%" }}>
-                            <div className="card-body text-center">
-                                <h4 className="card-title mb-3">Item: {device.item}</h4>
-                                <hr />
-                                <p>S/N: {device.serialNo}</p>
-                                <p>Color: {device.color}</p>
-                                <hr />
-                                <p>Description: {device.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                })}
-
-            </div>
+            <table className="table table-striped mt-4 fs-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Matric No</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Serial No</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        studentDevices?.map((device, i) => (
+                            <tr>
+                                <th scope="row">{i + 1}</th>
+                                <td>{device?.matricNo}</td>
+                                <td>{device?.item}</td>
+                                <td>{device?.serialNo}</td>
+                                <td>{device?.color}</td>
+                                <td>{device?.description}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>            
         </div>
     </>
 }
