@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import axios from "axios";
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
 const SingleHall = () => {
@@ -9,8 +9,6 @@ const SingleHall = () => {
     const hallId = params.id;
 
     const [hall, setHall] = useState({});
-    const navigate = useNavigate();
-    const goBack = () => navigate(-1);
 
     async function getHall(hallId) {
         try {

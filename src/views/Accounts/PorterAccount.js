@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-const HallAdminAccount = () => {
+const PorterAccount = () => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
@@ -148,4 +148,4 @@ const HallAdminAccount = () => {
     </>
 }
 
-export default HallAdminAccount;
+export default PorterAccount;

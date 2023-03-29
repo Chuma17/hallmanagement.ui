@@ -26,6 +26,8 @@ import PorterDashboard from './views/DashBoards/PorterDashboard';
 //Accounts
 import StudentAccount from './views/Accounts/StudentAccount';
 import HallAdminAccount from './views/Accounts/HallAdminAccount';
+import ChiefHallAdminAccount from './views/Accounts/ChiefHallAdminAccount';
+import PorterAccount from './views/Accounts/PorterAccount';
 
 //Singles
 import SingleHall from './views/Singles/SingleHall';
@@ -167,12 +169,14 @@ const App = () => {
           <Route path="/add-hallAdmin" element={<HallAdminRegistration />} />
           <Route path="/porters" element={<Porters />} />
           <Route path="/add-porter" element={<PorterRegistration />} />
+          <Route path="/edit-chiefHallAdmin-account/:id" element={<ChiefHallAdminAccount />} />          
 
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Porter]} />}>
           
           <Route path="/porter-dashboard" element={<PorterDashboard />} />
+          <Route path="/edit-porter-account/:id" element={<PorterAccount />} />          
         
         </Route>
 

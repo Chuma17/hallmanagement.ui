@@ -56,42 +56,59 @@ const AddHall = () => {
 
 
     return <>
-        <button className="btn btn-danger w-25" onClick={goBack}>Go Back</button>
+        <section className="background-radial-gradient overflow-hidden">
 
-        <form className="login-form form w-75s" onSubmit={submitHandler}>
+            <div className="container px-4 py-2 px-md-5 text-center text-lg-start my-5">
+                <div className="row gx-lg-5 align-items-center mb-4">
 
-            <h3 className="mt-3 mb-3 ms-4">Add new hall</h3>
-            <hr />
+                    <div className="col-lg-6 mb-5 ms-auto me-auto mb-lg-0 position-relative">
+                        <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
+                        <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+                        <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>
 
-            <div className="mb-4 me-4 ms-4">
-                <label className="form-label" htmlFor="hallName">Hall Name</label>
-                <input
-                    type="text"
-                    id="hallName"
-                    value={hallName}
-                    onChange={e => setHallName(e.target.value)}
-                    required
-                    className="form-control"
-                />
-            </div>            
+                        <div className="card bg-glass">
+                            <div className="card-body px-4 py-5 px-md-5">
 
-            <div className="mb-4">
-                <label className="form-label" htmlfor="hallType">Hall Type</label>
-                <select value={hallTypeId} onChange={e => setHallTypeId(e.target.value)} required className="form-control form-select">
-                    <option hidden value="">--- Select Hall Type ---</option>
+                                <form className="form" onSubmit={submitHandler}>
+                                    <h5 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Add new hall</h5>
 
-                    {hallTypes.length > 0 && hallTypes.map(hallType1 => {
-                        return <option key={hallType1.hallTypeId} value={hallType1.hallTypeId}> {hallType1.description} </option>
-                    })}
-                </select>
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlFor="hallName">Hall Name</label>
+                                        <input
+                                            type="text"
+                                            id="hallName"
+                                            value={hallName}
+                                            onChange={e => setHallName(e.target.value)}
+                                            required
+                                            className="form-control"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4 me-4 ms-4">
+                                        <label className="form-label" htmlfor="hallType">Hall Type</label>
+                                        <select value={hallTypeId} onChange={e => setHallTypeId(e.target.value)} required className="form-control form-select">
+                                            <option hidden value="">--- Select Hall Type ---</option>
+
+                                            {hallTypes.length > 0 && hallTypes.map(hallType1 => {
+                                                return <option key={hallType1.hallTypeId} value={hallType1.hallTypeId}> {hallType1.description} </option>
+                                            })}
+                                        </select>
+                                    </div>
+
+                                    <div className="text-center">
+                                        <button type="submit" className="btn btn-dark w-25 btn-block mb-4">
+                                            Add
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-
-            <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 ms-4 mb-4 mt-4">
-                Add
-            </button>
-
-        </form>
+        </section>
     </>
 }
 
